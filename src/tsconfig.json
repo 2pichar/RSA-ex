@@ -1,5 +1,8 @@
 {
     "include": ["ts/*.ts"],
     "exclude": [],
-    "compilerOptions": {}
+    "compilerOptions": {
+        "types": ["node"],
+        "typeRoots": ["node_modules/@types"],
+    }
 }
