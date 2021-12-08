@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/2pichar/RSA-ex/issues"
   },
-  "homepage": "https://github.com/2pichar/RSA-ex#readme"
+  "homepage": "https://github.com/2pichar/RSA-ex#readme",
+  "devDependencies":{
+    "typescript": "latest"
+  }
 }
