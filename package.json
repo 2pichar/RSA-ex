@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/2pichar/RSA-ex#readme",
   "devDependencies":{
-    "typescript": "latest"
+    "typescript": "latest",
+    "@types/node": "latest"
   }
 }
