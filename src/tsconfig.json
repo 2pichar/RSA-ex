@@ -4,5 +4,6 @@
     "compilerOptions": {
         "types": ["node"],
         "typeRoots": ["node_modules/@types"],
+        "outDir": "dist/ts",
     }
 }
