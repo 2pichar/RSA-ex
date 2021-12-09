@@ -16,22 +16,7 @@ c^d mod n = m
 */
 
 import * as numbers from './number';
-function hash(s: string): number {
-    let h = 0;
-    for (let i = 0; i < s.length; i++) {
-        h = (h * 31 + s.charCodeAt(i)) & 0xffffffff;
-    }
-    return h;
-}
-
-function unhash(n: number): string {
-    let s = '';
-    while (n > 0) {
-        s += String.fromCharCode(n & 0xff);
-        n >>= 8;
-    }
-    return s;
-}
+import * as hash from './hash';
 
 function generateKeys(bits: number): { n: number, e: number, d: number } {
     const p = numbers.generatePrime(bits);
@@ -51,4 +36,4 @@ function decrypt(c: number, n: number, d: number): number {
     return numbers.modularExponentiation(c, d, n);
 }
 
-export { hash, generateKeys, encrypt, decrypt };
+export { generateKeys, encrypt, decrypt };
