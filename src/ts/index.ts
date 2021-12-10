@@ -56,7 +56,6 @@ async function main(): Promise<void>{
             process.exit(1);
         };
     }
-    console.log("Goodbye!");
     process.exit(0);
 }
 
