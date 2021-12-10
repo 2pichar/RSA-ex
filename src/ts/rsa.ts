@@ -16,16 +16,16 @@ c^d mod n = m
 */
 
 import * as math from './math';
-import * as hash from './hash';
+import './types';
 
-function generateKeys(bits: number): { n: number, e: number, d: number } {
+function generateKeys(bits: number): RSAKeys {
     const p = math.generatePrime(bits);
     const q = math.generatePrime(bits);
     const n = p * q;
     const lambda = math.lcm((p - 1), (q - 1));
     const e = math.generateCoprime(lambda);
     const d = math.modularInverse(e, lambda);
-    return { n, e, d };
+    return { public: { n, e }, private: { n, d } };
 }
 
 function encrypt(m: number, n: number, e: number): number {
@@ -36,4 +36,9 @@ function decrypt(c: number, n: number, d: number): number {
     return math.modularExponentiation(c, d, n);
 }
 
-export { generateKeys, encrypt, decrypt };
+const NULLKEYS = {
+    public: { n: 0, e: 0 },
+    private: { n: 0, d: 0 }
+};
+
+export { generateKeys, encrypt, decrypt , NULLKEYS};
