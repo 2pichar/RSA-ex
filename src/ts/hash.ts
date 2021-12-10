@@ -11,10 +11,12 @@ function hash(s){
 	return hexStr;
 }
 
-function unhash(s){
+function unhash(h){
+	let mod = h.length % CHAR;
+	h.padStart(CHAR * ((h.length - mod)/CHAR + (mod == 0 ? 0 : 0)), '0');
 	let str = '';
-	for(let i = 0; i < s.length; i+= CHAR){
-		let n = number(s.slice(i, i+CHAR));
+	for(let i = 0; i < h.length; i+= CHAR){
+		let n = number(h.slice(i, i+CHAR));
 		let char = n ^ MASK;
 		str += String.fromCharCode(char);
 	}
