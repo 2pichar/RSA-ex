@@ -1,6 +1,6 @@
 import * as readline from 'readline';
 import {Duplex} from 'stream';
-import 'types' // Import types
+import './types' // Import types
 
 const rl: readline.Interface = readline.createInterface({
   input: process.stdin,
@@ -22,23 +22,4 @@ function onInput(callback): void{
   rl.on('line', callback);
 }
 
-class UI extends Duplex {
-    private _src: readline.Interface;
-    constructor(input, output) {
-        super({encoding: 'utf-8'});
-        this._src = readline.createInterface({input, output});
-        this._src.on('line', (data) => {
-          this.push(data);
-          this.emit('input');
-        });
-    };
-    _read(size){
-        this._src.prompt();
-    }
-    _write(data, encoding, callback){
-        this._src.write(data);
-    }
-}
-
-export default UI;
-export {onInput, input, UI};
+export {onInput, input};
