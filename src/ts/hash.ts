@@ -6,7 +6,7 @@ function number(bits){
 function hash(s){
 	let hexStr = '';
 	for(let i = 0; i < s.length; i++){
-		hexStr += (s.charCodeAt(i) ^ MASK).toString(16).padStart(CHAR, 0);
+		hexStr += (s.charCodeAt(i) ^ MASK).toString(16).padStart(CHAR, '0');
 	}
 	return hexStr;
 }
@@ -22,4 +22,4 @@ function unhash(s){
 }
 
 export default hash;
-export {hash, unhash};
+export {hash, unhash, number};
