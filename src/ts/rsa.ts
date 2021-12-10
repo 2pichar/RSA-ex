@@ -15,25 +15,25 @@ decryption:
 c^d mod n = m
 */
 
-import * as numbers from './number';
+import * as math from './math';
 import * as hash from './hash';
 
 function generateKeys(bits: number): { n: number, e: number, d: number } {
-    const p = numbers.generatePrime(bits);
-    const q = numbers.generatePrime(bits);
+    const p = math.generatePrime(bits);
+    const q = math.generatePrime(bits);
     const n = p * q;
-    const lambda = numbers.lcm((p - 1), (q - 1));
-    const e = numbers.generateCoprime(lambda);
-    const d = numbers.modularInverse(e, lambda);
+    const lambda = math.lcm((p - 1), (q - 1));
+    const e = math.generateCoprime(lambda);
+    const d = math.modularInverse(e, lambda);
     return { n, e, d };
 }
 
 function encrypt(m: number, n: number, e: number): number {
-    return numbers.modularExponentiation(m, e, n);
+    return math.modularExponentiation(m, e, n);
 }
 
 function decrypt(c: number, n: number, d: number): number {
-    return numbers.modularExponentiation(c, d, n);
+    return math.modularExponentiation(c, d, n);
 }
 
 export { generateKeys, encrypt, decrypt };
