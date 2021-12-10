@@ -6,6 +6,17 @@ type float = number;
 type double = number;
 type date = Date;
 
+type RSAKeys = {
+    public: {
+        n: number;
+        e: number;
+    };
+    private: {
+        n: number;
+        d: number;
+    };
+};
+
 Object.defineProperties(Object.prototype, {
     keys: {
         value(){
