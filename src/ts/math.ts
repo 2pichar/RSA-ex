@@ -1,13 +1,5 @@
 function modularExponentiation(a: int, b: int, m: int): int {
-    let result: int = 1;
-    while (b > 0) {
-        if (b % 2 == 1) {
-            result = (result * a) % m;
-        }
-        a = (a * a) % m;
-        b = b / 2;
-    }
-    return result;
+    return (a ** b) % m;
 }
 function modularInverse(a: int, m: int): int {
     let t: int = 0;
