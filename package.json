@@ -4,7 +4,10 @@
   "description": "A simple example of RSA encryption with Python and Node.js versions",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:ts":"node dist/ts/index.js",
+    "start:js":"node dist/js/index.js",
+    "start:py":"python3 dist/py/main.py"
   },
   "repository": {
     "type": "git",
