@@ -20,7 +20,7 @@ type RSAKeys = {
 
 Object.defineProperties(Object.prototype, {
     keys: {
-        value(){
+        value(): str[]{
             return Object.keys(this);
         },
         enumerable: false,
@@ -28,7 +28,7 @@ Object.defineProperties(Object.prototype, {
         configurable: false
     },
     values: {
-        value(){
+        value(): unknown[]{
             return Object.values(this);
         },
         enumerable: false,
@@ -38,6 +38,14 @@ Object.defineProperties(Object.prototype, {
 });
 
 interface Object {
-    keys(): string[];
-    values(): any[];
+    keys(): str[];
+    values(): unknown[];
+}
+
+function int(n: any = 0): int {
+    return Number(n)
+}
+
+function int64(n: int | int64 | str | char | bool): int64{
+    return BigInt(n);
 }

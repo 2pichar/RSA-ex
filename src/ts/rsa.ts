@@ -17,22 +17,22 @@ c^d mod n = m
 
 import * as math from './math';
 
-function generateKeys(bits: number): RSAKeys {
-    const p = math.generatePrime(bits);
-    const q = math.generatePrime(bits);
-    const n = p * q;
-    const lambda = math.lcm((p - 1), (q - 1));
-    const e = math.generateCoprime(lambda);
-    const d = math.modularInverse(e, lambda);
+function generateKeys(bits: int): RSAKeys {
+    const p: int64 = math.generatePrime(bits);
+    const q: int64 = math.generatePrime(bits);
+    const n: int64 = p * q;
+    const lambda: int64 = math.lcm((p - 1), (q - 1));
+    const e: int64 = math.generateCoprime(lambda);
+    const d: int64 = math.modularInverse(e, lambda);
     return { public: { n, e }, private: { n, d } };
 }
 
-function encrypt(m: number, n: int64, e: int64): int64 {
+function encrypt(m: int | int64, n: int64, e: int64): int64 {
     return math.modularExponentiation(int64(m), e, n);
 }
 
-function decrypt(c: int64, n: int64, d: int64): number {
-    return Number(math.modularExponentiation(c, d, n));
+function decrypt(c: int | int64, n: int64, d: int64): number {
+    return int(math.modularExponentiation(c, d, n));
 }
 
 const NULL: RSAKeys = {
