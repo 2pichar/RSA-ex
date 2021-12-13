@@ -1,5 +1,6 @@
 type str = string;
 type int = number;
+type int64 = bigint;
 type char = string;
 type bool = boolean;
 type float = number;
@@ -8,12 +9,12 @@ type date = Date;
 
 type RSAKeys = {
     public: {
-        n: number;
-        e: number;
+        n: int64;
+        e: int64;
     };
     private: {
-        n: number;
-        d: number;
+        n: int64;
+        d: int64;
     };
 };
 
