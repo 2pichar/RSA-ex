@@ -16,7 +16,6 @@ c^d mod n = m
 */
 
 import * as math from './math';
-import './types';
 
 function generateKeys(bits: number): RSAKeys {
     const p = math.generatePrime(bits);
@@ -28,17 +27,17 @@ function generateKeys(bits: number): RSAKeys {
     return { public: { n, e }, private: { n, d } };
 }
 
-function encrypt(m: number, n: number, e: number): number {
-    return math.modularExponentiation(m, e, n);
+function encrypt(m: number, n: int64, e: int64): int64 {
+    return math.modularExponentiation(int64(m), e, n);
 }
 
-function decrypt(c: number, n: number, d: number): number {
-    return math.modularExponentiation(c, d, n);
+function decrypt(c: int64, n: int64, d: int64): number {
+    return Number(math.modularExponentiation(c, d, n));
 }
 
-const NULLKEYS = {
-    public: { n: 0, e: 0 },
-    private: { n: 0, d: 0 }
+const NULL: RSAKeys = {
+    public: { n: 0n, e: 0n },
+    private: { n: 0n, d: 0n }
 };
 
 export { generateKeys, encrypt, decrypt , NULLKEYS};
