@@ -1,7 +1,6 @@
 import * as rsa from './rsa';
 import * as hash from './hash';
 import {input} from './user';
-import './types';
 
 async function main(): Promise<void>{
     console.log("Welcome to RSA-ex in TS!");
