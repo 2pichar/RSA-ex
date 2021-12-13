@@ -1,6 +1,5 @@
 import * as readline from 'readline';
 import {Duplex} from 'stream';
-import './types' // Import types
 
 const rl: readline.Interface = readline.createInterface({
   input: process.stdin,
@@ -18,7 +17,7 @@ async function input(prompt: str): Promise<str> {
     }
   });
 }
-function onInput(callback): void{
+function onInput(callback): void {
   rl.on('line', callback);
 }
 
