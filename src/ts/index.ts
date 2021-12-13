@@ -6,7 +6,7 @@ import './types';
 async function main(): Promise<void>{
     console.log("Welcome to RSA-ex in TS!");
     console.log("This is an example of the RSA encryption method that is used today in the Internet to encrypt data.\n")
-    var keys: RSAKeys = rsa.NULLKEYS;
+    var keys: RSAKeys = rsa.NULL;
     mainloop:
     while (true){
         console.log("What do you want to do?\n")
@@ -19,6 +19,7 @@ async function main(): Promise<void>{
             switch (choice){
                 case "g":
                     keys = await rsa.generateKeys(10);
+                    console.log("Keys generated");
                     break;
                 case "e":
                     if(!keys.public.e){
