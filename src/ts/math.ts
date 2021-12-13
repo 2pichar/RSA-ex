@@ -11,7 +11,7 @@ function modularExponentiation(a: int, b: int, m: int): int {
 }
 function modularInverse(a: int, m: int) {
     // validate inputs
-    [a, m] = [Number(a), Number(m)]
+    [a, m] = [int(a), int(m)]
     if (Number.isNaN(a) || Number.isNaN(m)) {
       return NaN // invalid input
     }
