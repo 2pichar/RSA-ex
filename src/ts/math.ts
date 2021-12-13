@@ -1,5 +1,13 @@
-function modularExponentiation(a: int, b: int, m: int): int64 {
-    return (Bigint(a) ** BigInt(b)) % BigInt(m);
+function modularExponentiation(a: int, b: int, m: int): int {
+    let res: int = 1;
+    a = a % m;
+    if(a === 0) return 0;
+    while(b > 0){
+      if(b & 1) res = (res * x) % m;
+      y >>= 1;
+      x = (x * x) % m;
+    }
+    return res;
 }
 function modularInverse(a: int, m: int) {
     // validate inputs
@@ -31,7 +39,7 @@ function modularInverse(a: int, m: int) {
 }
   
 function generatePrime(bits: int): int64 {
-    let prime: int = getRandomInt(2 ** bits, 2 ** (bits + 1));
+    let prime: int64 = getRandomInt(2 ** bits, 2 ** (bits + 1));
     return prime;
 }
 
@@ -40,22 +48,23 @@ function generateCoprime(n: int): int64 {
     do{
         coprime = getRandomPrime(2, n);
     } while(gcd(n, coprime) != 1);
-    return BigInt(coprime);
+    return int64(coprime);
 }
 
-function getRandomPrime(min: int, max: int): int {
-    let num: int = getRandomInt(min, max);
+function getRandomPrime(min: int, max: int): int64 {
+    let num: int64 = getRandomInt(min, max);
     while (!isPrime(num)) {
         num++;
     }
     return num;
 }
 
-function getRandomInt(min: int, max: int): int {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomInt(min: int, max: int): int64 {
+    return int64(Math.floor(Math.random() * (max - min + 1)) + min);
 }
 
-function isPrime(num: int): bool {
+function isPrime(num: int | int64): bool {
+    num = int64(num);
     if (num <= 3) return num > 1;
     
     if ((num % 2 === 0) || (num % 3 === 0)) return false;
@@ -71,12 +80,16 @@ function isPrime(num: int): bool {
     return true;
   }
 
-function lcm(a: int, b: int): int {
-    return a * b / gcd(a, b);
+function lcm(a: int | int64, b: int | int64): int64 {
+  a = int64(a);
+  b = int64(b);  
+  return int64(a * b / gcd(a, b));
 }
 
-function gcd(a: int, b: int): int {
-    if (b == 0) {
+function gcd(a: int | int64, b: int | int64): int64 {
+  a = int64(a);
+  b = int64(b);
+  if (b == 0) {
         return a;
     }
     return gcd(b, a % b);
