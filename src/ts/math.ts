@@ -1,39 +1,46 @@
-function modularExponentiation(a: int, b: int, m: int): int {
-    return (a ** b) % m;
+function modularExponentiation(a: int, b: int, m: int): int64 {
+    return (Bigint(a) ** BigInt(b)) % BigInt(m);
 }
-function modularInverse(a: int, m: int): int {
-    let t: int = 0;
-    let newt: int = 1;
-    let r: int = m;
-    let newr: int = a;
-    while (newr != 0) {
-        let quotient: int = Math.floor(r / newr);
-        let temp: int = newt;
-        newt = t - quotient * newt;
-        t = temp;
-        temp = newr;
-        newr = r - quotient * newr;
-        r = temp;
+function modularInverse(a: int, m: int) {
+    // validate inputs
+    [a, m] = [Number(a), Number(m)]
+    if (Number.isNaN(a) || Number.isNaN(m)) {
+      return NaN // invalid input
     }
-    if (r > 1) {
-        return -1;
+    a = (a % m + m) % m
+    if (!a || m < 2) {
+      return NaN // invalid input
     }
-    if (t < 0) {
-        t = t + m;
+    // find the gcd
+    const s = []
+    let b = m
+    while(b) {
+      [a, b] = [b, a % b]
+      s.push({a, b})
     }
-    return t;
+    if (a !== 1) {
+      return NaN // inverse does not exists
+    }
+    // find the inverse
+    let x = 1
+    let y = 0
+    for(let i = s.length - 2; i >= 0; --i) {
+      [x, y] = [y,  x - y * Math.floor(s[i].a / s[i].b)]
+    }
+    return (y % m + m) % m
 }
-function generatePrime(bits: int): int {
+  
+function generatePrime(bits: int): int64 {
     let prime: int = getRandomInt(2 ** bits, 2 ** (bits + 1));
     return prime;
 }
 
-function generateCoprime(n: int): int {
+function generateCoprime(n: int): int64 {
     let coprime: int;
     do{
         coprime = getRandomPrime(2, n);
     } while(gcd(n, coprime) != 1);
-    return coprime;
+    return BigInt(coprime);
 }
 
 function getRandomPrime(min: int, max: int): int {
