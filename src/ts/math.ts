@@ -1,15 +1,15 @@
-function modularExponentiation(a: int, b: int, m: int): int {
-    let res: int = 1;
+function modularExponentiation(a: int64, b: int64, m: int64): int64 {
+    let res: int64 = 1n;
     a = a % m;
-    if(a === 0) return 0;
+    if(a === 0n) return 0n;
     while(b > 0){
-      if(b & 1) res = (res * x) % m;
-      y >>= 1;
-      x = (x * x) % m;
+      if(b & 1n) res = (res * a) % m;
+      b >>= 1n;
+      a = (a * a) % m;
     }
     return res;
 }
-function modularInverse(a: int, m: int) {
+function modularInverse(a: int | int64, m: int | int64): int | int64 {
     // validate inputs
     [a, m] = [int(a), int(m)]
     if (Number.isNaN(a) || Number.isNaN(m)) {
@@ -35,7 +35,7 @@ function modularInverse(a: int, m: int) {
     for(let i = s.length - 2; i >= 0; --i) {
       [x, y] = [y,  x - y * Math.floor(s[i].a / s[i].b)]
     }
-    return (y % m + m) % m
+    return int64((y % m + m) % m)
 }
   
 function generatePrime(bits: int): int64 {
@@ -43,15 +43,16 @@ function generatePrime(bits: int): int64 {
     return prime;
 }
 
-function generateCoprime(n: int): int64 {
-    let coprime: int;
-    do{
-        coprime = getRandomPrime(2, n);
-    } while(gcd(n, coprime) != 1);
-    return int64(coprime);
+function generateCoprime(n: int | int64): int64 {
+  n = int64(n);
+  let coprime: int64;
+  do{
+      coprime = getRandomPrime(2, n);
+  } while(gcd(n, coprime) != 1n);
+  return coprime;
 }
 
-function getRandomPrime(min: int, max: int): int64 {
+function getRandomPrime(min: int | int64, max: int | int64): int64 {
     let num: int64 = getRandomInt(min, max);
     while (!isPrime(num)) {
         num++;
@@ -59,22 +60,22 @@ function getRandomPrime(min: int, max: int): int64 {
     return num;
 }
 
-function getRandomInt(min: int, max: int): int64 {
-    return int64(Math.floor(Math.random() * (max - min + 1)) + min);
+function getRandomInt(min: int | int64, max: int | int64): int64 {
+    return int64(Math.floor(int(int64(Math.random()) * (int64(max) - int64(min) + 1n) + int64(min))));
 }
 
-function isPrime(num: int | int64): bool {
-    num = int64(num);
-    if (num <= 3) return num > 1;
+function isPrime(num: int64): bool {
+    num = num;
+    if (num <= 3n) return num > 1n;
     
-    if ((num % 2 === 0) || (num % 3 === 0)) return false;
+    if ((num % 2n === 0n) || (num % 3n === 0n)) return false;
     
-    let count: int = 5;
+    let count: int64 = 5n;
     
-    while (Math.pow(count, 2) <= num) {
-      if (num % count === 0 || num % (count + 2) === 0) return false;
+    while (int64(Math.pow(int(count), 2)) <= num) {
+      if (num % count == 0n || num % (count + 2n) == 0n) return false;
       
-      count += 6;
+      count += 6n;
     }
     
     return true;
@@ -89,7 +90,7 @@ function lcm(a: int | int64, b: int | int64): int64 {
 function gcd(a: int | int64, b: int | int64): int64 {
   a = int64(a);
   b = int64(b);
-  if (b == 0) {
+  if (b === 0n) {
         return a;
     }
     return gcd(b, a % b);
