@@ -49,3 +49,7 @@ function int(n: any = 0): int {
 function int64(n: int | int64 | str | char | bool): int64{
     return BigInt(n);
 }
+
+
+global.int = int;
+global.int64 = int64;
