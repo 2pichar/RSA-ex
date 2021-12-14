@@ -15,11 +15,12 @@ async function main(): Promise<void>{
         console.log("Quit (q)");
         try {
             let choice = await input(">");
+            inputSwitch:
             switch (choice){
                 case "g":
-                    keys = await rsa.generateKeys(10);
+                    keys = await rsa.generateKeys(100);
                     console.log("Keys generated");
-                    break;
+                    break inputSwitch;
                 case "e":
                     if(!keys.public.e){
                         console.log("You need to generate the public/private keys first!");
@@ -31,7 +32,7 @@ async function main(): Promise<void>{
                         let encrypted = (await rsa.encrypt(hash.number(hashed), keys.public.n, keys.public.e)).toString(16);
                         console.log("Encrypted message: " + encrypted);
                     }
-                    break;
+                    break inputSwitch;
                 case "d":
                     if(!keys.private.d){
                         console.log("You need to generate the public/private keys first!");
@@ -43,13 +44,13 @@ async function main(): Promise<void>{
                         let decrypted = await hash.unhash(hashed);
                         console.log("Decrypted message: " + decrypted);
                     }
-                    break;
+                    break inputSwitch;
                 case "q":
                     console.log("Exiting...");
                     break mainloop;
                 default:
                     console.log("Invalid input!");
-                    break;
+                    break inputSwitch;
             }
         } catch(e){
             console.log("An error occured: " + e);

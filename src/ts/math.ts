@@ -38,30 +38,38 @@ function modularInverse(a: int | int64, m: int | int64): int | int64 {
     return int64((y % m + m) % m)
 }
   
-function generatePrime(bits: int): int64 {
-    let prime: int64 = getRandomInt(2 ** bits, 2 ** (bits + 1));
+function generatePrime(bits: int | int64): int64 {
+    bits = int64(bits);
+    let prime: int64 = getRandomInt(2n ** bits, 2n ** (bits + 1n));
     return prime;
 }
 
 function generateCoprime(n: int | int64): int64 {
+  console.log('generateCoprime()');
   n = int64(n);
   let coprime: int64;
   do{
       coprime = getRandomPrime(2, n);
+      console.log(coprime);
   } while(gcd(n, coprime) != 1n);
   return coprime;
 }
 
 function getRandomPrime(min: int | int64, max: int | int64): int64 {
-    let num: int64 = getRandomInt(min, max);
-    while (!isPrime(num)) {
-        num++;
-    }
-    return num;
+  console.log('getRandomPrime()');
+  let num: int64 = getRandomInt(min, max);
+  if(!(num & 1n)){
+    num++;
+  }
+  while (!isPrime(num)) {
+      num+=2n;
+  }
+  console.log(num);
+  return num;
 }
 
 function getRandomInt(min: int | int64, max: int | int64): int64 {
-    return int64(Math.floor(int(int64(Math.random()) * (int64(max) - int64(min) + 1n) + int64(min))));
+    return int64(Math.floor(int(Math.random() * int((int64(max) - int64(min) + 1n) + int64(min)))));
 }
 
 function isPrime(num: int64): bool {
