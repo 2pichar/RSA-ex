@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:ts":"node dist/ts/index.js",
     "start:js":"node dist/js/index.js",
-    "start:py":"python3 dist/py/main.py"
+    "start:py":"python3 dist/py/main.py",
+    "build:ts":"tsc -p ./src",
+    "clean": "rm -rf dist/**/*"
   },
   "repository": {
     "type": "git",
