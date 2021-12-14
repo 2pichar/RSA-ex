@@ -5,6 +5,7 @@
         "types": ["node"],
         "typeRoots": ["node_modules/@types"],
         "outDir": "../dist/ts",
-        "declaration": true
+        "declaration": true,
+        "target": "es2020",
     }
 }
