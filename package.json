@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple example of RSA encryption with Python and Node.js versions",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:ts":"node dist/ts/index.js",
