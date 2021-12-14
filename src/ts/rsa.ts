@@ -15,15 +15,17 @@ decryption:
 c^d mod n = m
 */
 
-import * as math from './math';
+import * as math from './math.js';
+import './types.js';
 
 function generateKeys(bits: int): RSAKeys {
     const p: int64 = math.generatePrime(bits);
     const q: int64 = math.generatePrime(bits);
     const n: int64 = p * q;
-    const lambda: int64 = math.lcm((p - 1), (q - 1));
+    const lambda: int64 = math.lcm((p - 1n), (q - 1n));
     const e: int64 = math.generateCoprime(lambda);
-    const d: int64 = math.modularInverse(e, lambda);
+    let d = math.modularInverse(e, lambda);
+    d = (typeof d === 'number') ? null : d;
     return { public: { n, e }, private: { n, d } };
 }
 
@@ -31,8 +33,8 @@ function encrypt(m: int | int64, n: int64, e: int64): int64 {
     return math.modularExponentiation(int64(m), e, n);
 }
 
-function decrypt(c: int | int64, n: int64, d: int64): number {
-    return int(math.modularExponentiation(c, d, n));
+function decrypt(c: int | int64, n: int64, d: int64): int64 {
+    return math.modularExponentiation(int64(c), d, n);
 }
 
 const NULL: RSAKeys = {
@@ -40,4 +42,4 @@ const NULL: RSAKeys = {
     private: { n: 0n, d: 0n }
 };
 
-export { generateKeys, encrypt, decrypt , NULLKEYS};
+export { generateKeys, encrypt, decrypt , NULL};
