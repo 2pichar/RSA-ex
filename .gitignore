@@ -1,1 +1,4 @@
 node_modules/
+dist/ts/
+dist/js/
+dist/py/
