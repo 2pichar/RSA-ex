@@ -1,6 +1,6 @@
-import * as rsa from './rsa';
-import * as hash from './hash';
-import {input} from './user';
+import * as rsa from './rsa.js';
+import * as hash from './hash.js';
+import {input} from './user.js';
 
 async function main(): Promise<void>{
     console.log("Welcome to RSA-ex in TS!");
