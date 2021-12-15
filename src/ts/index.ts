@@ -20,7 +20,6 @@ async function main(): Promise<void>{
                 case "g":
                     keys = await rsa.generateKeys(100);
                     console.log("Keys generated");
-                    console.log(keys);
                     break inputSwitch;
                 case "e":
                     if(!keys.public.e){
@@ -28,22 +27,21 @@ async function main(): Promise<void>{
                         continue mainloop;
                     } else {
                         let message = await input("Enter the message to encrypt: ");
-                        let hashed = await hash.hash(message);
+                        let hashed = hash.encode(message);
                         console.log(hashed);
-                        let encrypted = (await rsa.encrypt(hash.number(hashed), keys.public.n, keys.public.e)).toString(16);
+                        let encrypted = hash.hex(rsa.encrypt(hash.decimal(hashed), keys.public.n, keys.public.e));
                         console.log("Encrypted message: " + encrypted);
                     }
                     break inputSwitch;
                 case "d":
-                    console.log(keys);
                     if(!keys.private.d){
                         console.log("You need to generate the public/private keys first!");
                         continue mainloop;
                     } else {
                         let message = await input("Enter the message to decrypt: ");
-                        let hashed = (await rsa.decrypt(hash.number(message), keys.public.n, keys.private.d)).toString(16);
+                        let hashed = hash.hex(rsa.decrypt(hash.decimal(message), keys.private.n, keys.private.d));
                         console.log("Hashed decrypted message: " + hashed);
-                        let decrypted = await hash.unhash(hashed);
+                        let decrypted = hash.decode(hashed);
                         console.log("Decrypted message: " + decrypted);
                     }
                     break inputSwitch;
