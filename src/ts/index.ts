@@ -20,6 +20,7 @@ async function main(): Promise<void>{
                 case "g":
                     keys = await rsa.generateKeys(100);
                     console.log("Keys generated");
+                    console.log(keys);
                     break inputSwitch;
                 case "e":
                     if(!keys.public.e){
@@ -34,6 +35,7 @@ async function main(): Promise<void>{
                     }
                     break inputSwitch;
                 case "d":
+                    console.log(keys);
                     if(!keys.private.d){
                         console.log("You need to generate the public/private keys first!");
                         continue mainloop;
