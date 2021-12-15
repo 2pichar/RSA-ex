@@ -28,7 +28,6 @@ async function main(): Promise<void>{
                     } else {
                         let message = await input("Enter the message to encrypt: ");
                         let hashed = hash.encode(message);
-                        console.log(hashed);
                         let encrypted = hash.hex(rsa.encrypt(hash.decimal(hashed), keys.public.n, keys.public.e));
                         console.log("Encrypted message: " + encrypted);
                     }
@@ -40,7 +39,6 @@ async function main(): Promise<void>{
                     } else {
                         let message = await input("Enter the message to decrypt: ");
                         let hashed = hash.hex(rsa.decrypt(hash.decimal(message), keys.private.n, keys.private.d));
-                        console.log("Hashed decrypted message: " + hashed);
                         let decrypted = hash.decode(hashed);
                         console.log("Decrypted message: " + decrypted);
                     }
