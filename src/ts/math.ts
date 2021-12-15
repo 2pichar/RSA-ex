@@ -1,41 +1,40 @@
+import './types.js';
+import {checkPrimeSync as checkPrime} from 'crypto';
+
 function modularExponentiation(a: int64, b: int64, m: int64): int64 {
   console.log('modularExponentiation()');
-  let res: int64 = 1n;
-  a = a % m;
-  if(a === 0n) return 0n;
-  while(b > 0){
-    if(b & 1n) res = (res * a) % m;
-    b >>= 1n;
-    a = (a * a) % m;
-  }
-  return res;
+  return (a ** b) % m;
 }
 function modularInverse(a: int | int64, m: int | int64): int | int64 {
   console.log('modularInverse()');
   // validate inputs
-  [a, m] = [int(a), int(m)]
+  [a, m] = [int64(a), int64(m)]
   if (Number.isNaN(a) || Number.isNaN(m)) {
+    console.log('NaN1');
     return NaN // invalid input
   }
   a = (a % m + m) % m
   if (!a || m < 2) {
+    console.log('NaN2');
     return NaN // invalid input
   }
   // find the gcd
-  const s = []
-  let b = m
+  const s: {a: int64, b: int64}[] = []
+  let b: int64 = m
   while(b) {
-    [a, b] = [b, a % b]
+    [a, b] = [b, a % b];
+    console.log(a, b);
     s.push({a, b})
   }
-  if (a !== 1) {
+  if (a !== 1n) {
+    console.log('NaN3');
     return NaN // inverse does not exists
   }
   // find the inverse
-  let x = 1
-  let y = 0
+  let x = 1n
+  let y = 0n
   for(let i = s.length - 2; i >= 0; --i) {
-    [x, y] = [y,  x - y * Math.floor(s[i].a / s[i].b)]
+    [x, y] = [y,  x - y * s[i].a / s[i].b]
   }
   return int64((y % m + m) % m)
 }
@@ -50,12 +49,7 @@ function generatePrime(bits: int | int64): int64 {
 function generateCoprime(n: int | int64): int64 {
   console.log('generateCoprime()');
   n = int64(n);
-  let coprime: int64;
-  do{
-      coprime = getRandomPrime(2, n);
-      console.log(coprime);
-  } while(gcd(n, coprime) != 1n);
-  return coprime;
+  return n - 1n;
 }
 
 function getRandomPrime(min: int | int64, max: int | int64): int64 {
@@ -65,7 +59,7 @@ function getRandomPrime(min: int | int64, max: int | int64): int64 {
     num++;
   }
   console.log(num);
-  while (!isPrime(num)) {
+  while (!checkPrime(num)) {
       num+=2n;
       console.log(num);
   }
@@ -130,4 +124,4 @@ function sqrt(value: int64){
 
   return x;
 }
-export { modularExponentiation, modularInverse, generatePrime, generateCoprime, getRandomPrime, lcm, gcd, sqrt };
+export { modularExponentiation, modularInverse, generatePrime, generateCoprime, getRandomPrime, getRandomInt, isPrime, lcm, gcd, sqrt };
