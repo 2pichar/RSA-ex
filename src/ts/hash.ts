@@ -10,7 +10,7 @@ function decode(s: str): str{
 }
 
 function decimal(s: str): int64{
-	return BigInt(Number.parseInt(s, 16));
+	return BigInt(`0x${s}`);
 }
 
 function hex(n: int | int64): str{
