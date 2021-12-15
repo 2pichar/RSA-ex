@@ -80,14 +80,13 @@ function getRandomInt(min: int | int64, max: int | int64): int64 {
 
 function isPrime(num: int64): bool {
   console.log('isPrime()');
-  num = num;
   if (num <= 3n) return num > 1n;
   
   if ((num % 2n === 0n) || (num % 3n === 0n)) return false;
   
   let count: int64 = 5n;
   
-  while (int64(Math.pow(int(count), 2)) <= num) {
+  while (int64(Math.pow(int(count), 2)) <= sqrt(num)) {
     if (num % count == 0n || num % (count + 2n) == 0n) return false;
     
     count += 6n;
@@ -112,4 +111,23 @@ function gcd(a: int | int64, b: int | int64): int64 {
     }
     return gcd(b, a % b);
 }
-export { modularExponentiation, modularInverse, generatePrime, generateCoprime, getRandomPrime, lcm, gcd };
+
+function sqrt(value: int64){
+  // From https://golb.hplar.ch/2018/09/javascript-bigint.html
+  let k: int64 = 2n;
+  if (value < 0n) {
+    throw RangeError('negative number is not supported');
+  }
+
+  let o: int64 = 0n;
+  let x: int64 = value;
+  let limit: int = 100;
+
+  while (x ** k !== k && x !== o && --limit) {
+    o = x;
+    x = ((k - 1n) * x + value / x ** (k - 1n)) / k;
+  }
+
+  return x;
+}
+export { modularExponentiation, modularInverse, generatePrime, generateCoprime, getRandomPrime, lcm, gcd, sqrt };
