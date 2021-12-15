@@ -1,9 +1,32 @@
 import './types.js';
 import {checkPrimeSync as checkPrime} from 'crypto';
 
-function modularExponentiation(a: int64, b: int64, m: int64): int64 {
-  console.log('modularExponentiation()');
-  return (a ** b) % m;
+function modularExponentiation(x: int64, y: int64, m: int64): int64
+{
+    // Initialize result
+    let res = 1n;
+ 
+    // Update x if it is more
+    // than or equal to p
+    x = x % m;
+ 
+    if (x == 0n)
+        return 0n;
+ 
+    while (y > 0)
+    {
+        // If y is odd, multiply
+        // x with result
+        if (y & 1n)
+            res = (res * x) % m;
+ 
+        // y must be even now
+         
+        // y = $y/2
+        y = y >> 1n;
+        x = (x * x) % m;
+    }
+    return res;
 }
 function modularInverse(a: int | int64, m: int | int64): int | int64 {
   console.log('modularInverse()');
