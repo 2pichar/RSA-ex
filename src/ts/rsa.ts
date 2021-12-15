@@ -19,16 +19,22 @@ import * as math from './math.js';
 import './types.js';
 
 function generateKeys(bits: int): RSAKeys {
+    console.log('p');
     const p: int64 = math.generatePrime(bits);
     console.log(p);
+    console.log('q');
     const q: int64 = math.generatePrime(bits);
     console.log(q);
+    console.log('n');
     const n: int64 = p * q;
     console.log(n);
+    console.log('lambda');
     const lambda: int64 = math.lcm((p - 1n), (q - 1n));
     console.log(lambda);
+    console.log('e');
     const e: int64 = math.generateCoprime(lambda);
     console.log(e);
+    console.log('d');
     let d = math.modularInverse(e, lambda);
     d = (typeof d === 'number') ? null : d;
     console.log(d);
