@@ -1,6 +1,7 @@
 import * as rsa from './rsa.js';
 import * as hash from './hash.js';
 import {input} from './user.js';
+import File from './file.js';
 
 async function main(): Promise<void>{
     console.log("Welcome to RSA-ex in TS!");
@@ -10,6 +11,8 @@ async function main(): Promise<void>{
     while (true){
         console.log("What do you want to do?\n")
         console.log("Generate public/private keys (g)");
+        console.log("Load public/private keys from a file (l)");
+        console.log("Save public/private keys to a file (s)");
         console.log("Encrypt a message (e)");
         console.log("Decrypt a message (d)");
         console.log("Quit (q)");
@@ -23,7 +26,7 @@ async function main(): Promise<void>{
                     break inputSwitch;
                 case "e":
                     if(!keys.public.e){
-                        console.log("You need to generate the public/private keys first!");
+                        console.log("You need to generate/load the public/private keys first!");
                         continue mainloop;
                     } else {
                         let message = await input("Enter the message to encrypt: ");
@@ -34,7 +37,7 @@ async function main(): Promise<void>{
                     break inputSwitch;
                 case "d":
                     if(!keys.private.d){
-                        console.log("You need to generate the public/private keys first!");
+                        console.log("You need to generate/load the public/private keys first!");
                         continue mainloop;
                     } else {
                         let message = await input("Enter the message to decrypt: ");
@@ -42,6 +45,20 @@ async function main(): Promise<void>{
                         let decrypted = hash.decode(hashed);
                         console.log("Decrypted message: " + decrypted);
                     }
+                    break inputSwitch;
+                case "l":
+                    let path: str = await input("Enter the path to the file: ");
+                    let file: File = new File(path, 'r+');
+                    let str = await file.read();
+                    keys = JSON.parse(str);
+                    console.log("Keys loaded!");
+                    break inputSwitch;
+                case "s":
+                    let path: str = await input("Enter the path to the file: ");
+                    let file: File = new File(path, 'w+');
+                    await file.write(JSON.stringify(keys, "\t"));
+                    await file.close();
+                    console.log("Keys saved!");
                     break inputSwitch;
                 case "q":
                     console.log("Exiting...");
