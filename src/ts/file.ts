@@ -1,4 +1,4 @@
-import * as promises from 'fs/promises';
+import {open as fsopen} from 'fs/promises';
 import type FileHandle from 'fs/promises';
 
 enum MODE {
@@ -15,7 +15,7 @@ class File {
     mode: MODE;
     //Constructors
     async constructor(path: str, mode: str): Promise<File> {
-        this.#fd = await promises.open(path, mode);
+        this.#fd = await fsopen(path, mode);
         let flags: MODE;
         switch(mode){
             case 'r': flags = MODE.READ; break;
