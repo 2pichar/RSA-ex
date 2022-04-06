@@ -1,5 +1,5 @@
 import {open as fsopen} from 'fs/promises';
-import type FileHandle from 'fs/promises';
+import {type FileHandle} from 'fs/promises';
 
 enum MODE {
     READ,
@@ -11,11 +11,11 @@ enum MODE {
 }
 
 class File {
-    #fd: FileHandle;
+    #fd: FileHandle | Promise<FileHandle>;
     mode: MODE;
     //Constructors
-    async constructor(path: str, mode: str): Promise<File> {
-        this.#fd = await fsopen(path, mode);
+    constructor(path: str, mode: str) {
+        this.#fd = fsopen(path, mode);
         let flags: MODE;
         switch(mode){
             case 'r': flags = MODE.READ; break;
@@ -32,19 +32,21 @@ class File {
 
     //Static Functions
     static async open(path: str, mode:str): Promise<File> {
-        return await new this.constructor(path, mode);
+        return new this(path, mode);
     }
     
     //Instance Methods
     async read(): Promise<str> {
-        if(this.mode != MODE.APPEND || this.mode != MODE.WRITE){
-            let buf: Buffer;
-            ({buffer: buf} = await this.#fd.readFile('utf8'));
+        this.#fd = await this.#fd;
+        if(this.mode != MODE.APPEND && this.mode != MODE.WRITE){
+            let buf: Buffer = await this.#fd.readFile();
+            return buf.toString();
         } else {
             throw Error(`Can't read from file in append/write mode.`);
         }
     }
-    async write(data : string | buffer): Promise<bool> {
+    async write(data : string | Buffer): Promise<bool> {
+        this.#fd = await this.#fd;
         if(this.mode != MODE.READ){
             await this.#fd.writeFile(data);
         } else {
@@ -53,6 +55,7 @@ class File {
         return true;
     }
     async close(): Promise<bool> {
+        this.#fd = await this.#fd;
         await this.#fd.close();
         return true;
     }

@@ -47,16 +47,37 @@ async function main(): Promise<void>{
                     }
                     break inputSwitch;
                 case "l":
-                    let path: str = await input("Enter the path to the file: ");
-                    let file: File = new File(path, 'r+');
-                    let str = await file.read();
-                    keys = JSON.parse(str);
+                    let filepath: str = await input("Enter the path to the file: ");
+                    let f: File = new File(filepath, 'r+');
+                    let str = await f.read();
+                    let tempkeys = JSON.parse(str);
+                    keys = {
+                        public: {
+                            n: int64(tempkeys.public.n),
+                            e: int64(tempkeys.public.e)
+                        },
+                        private: {
+                            d: int64(tempkeys.private.d),
+                            n: int64(tempkeys.private.n)
+                        }
+                    }
                     console.log("Keys loaded!");
+                    await f.close();
                     break inputSwitch;
                 case "s":
                     let path: str = await input("Enter the path to the file: ");
                     let file: File = new File(path, 'w+');
-                    await file.write(JSON.stringify(keys, "\t"));
+                    let tempKeys = {
+                        public: {
+                            n: keys.public.n.toString(),
+                            e: keys.public.e.toString()
+                        },
+                        private: {
+                            d: keys.private.d.toString(),
+                            n: keys.private.n.toString(),
+                        }
+                    }
+                    await file.write(JSON.stringify(tempKeys, null, "\t"));
                     await file.close();
                     console.log("Keys saved!");
                     break inputSwitch;
