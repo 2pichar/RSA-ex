@@ -5,11 +5,11 @@ import File from './file.js';
 
 async function main(): Promise<void>{
     console.log("Welcome to RSA-ex in TS!");
-    console.log("This is an example of the RSA encryption method that is used today in the Internet to encrypt data.\n")
+    console.log("This is an example of the RSA encryption method that is used today in the Internet to encrypt data.")
     var keys: RSAKeys = rsa.NULL;
     mainloop:
     while (true){
-        console.log("What do you want to do?\n")
+        console.log("\n\nWhat do you want to do?\n")
         console.log("Generate public/private keys (g)");
         console.log("Load public/private keys from a file (l)");
         console.log("Save public/private keys to a file (s)");
@@ -17,7 +17,7 @@ async function main(): Promise<void>{
         console.log("Decrypt a message (d)");
         console.log("Quit (q)");
         try {
-            let choice = await input(">");
+            let choice = await input("> ");
             inputSwitch:
             switch (choice){
                 case "g":
